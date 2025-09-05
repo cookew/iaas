@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+# - base/dnsrecord.yml
+- base/iommu.yml
+- base/kubeletconfig.yml
+- base/pull-secret.yml
+- base/registry-mirror.yml
+
+patches:
+- path: patches/pull-secret.yml
+  target:
+    kind: Secret
+    name: pull-secret

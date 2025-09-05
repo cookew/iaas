@@ -1,0 +1,4 @@
+This might be necessary.
+https://metallb.io/installation/clouds/
+
+oc adm policy add-scc-to-user privileged -n metallb-system -z speaker

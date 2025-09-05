@@ -1,0 +1,42 @@
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: gitlab
+allowHostDirVolumePlugin: true
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: true
+allowedCapabilities: []
+defaultAddCapabilities: []
+fsGroup:
+  type: RunAsAny
+groups: []
+priority: 0
+readOnlyRootFilesystem: false
+requiredDropCapabilities: []
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: MustRunAs
+seccompProfiles:
+- '*'
+supplementalGroups:
+  type: RunAsAny
+# userNamespaceLevel: AllowHostLevel
+users:
+- system:serviceaccount:gitlab-system:default
+- system:serviceaccount:gitlab-system:gitlab-app-nonroot
+- system:serviceaccount:gitlab-system:gitlab-manager
+- system:serviceaccount:gitlab-system:gitlab-nginx-ingress
+- system:serviceaccount:gitlab-system:gitlab-prometheus-server
+volumes:
+- configMap
+- downwardAPI
+- emptyDir
+- hostPath
+- persistentVolumeClaim
+- projected
+- secret

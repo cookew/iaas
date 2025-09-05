@@ -1,0 +1,45 @@
+apiVersion: config.openshift.io/v1
+kind: ImageDigestMirrorSet
+metadata:
+  name: local-mirrors-digests
+spec:
+  imageDigestMirrors:
+  - mirrors:
+    - svc-1.wcooke.me:5001
+    - svc-2.wcooke.me:5001
+    source: docker.io
+  - mirrors:
+    - svc-1.wcooke.me:5002
+    - svc-2.wcooke.me:5002
+    source: quay.io
+  - mirrors:
+    - svc-1.wcooke.me:5003
+    - svc-2.wcooke.me:5003
+    source: docker.elastic.co
+  - mirrors:
+    - svc-1.wcooke.me:5004
+    - svc-2.wcooke.me:5004
+    source: registry.k8s.io
+---
+apiVersion: config.openshift.io/v1
+kind: ImageTagMirrorSet
+metadata:
+  name: local-mirrors-tags
+spec:
+  imageTagMirrors:
+  - mirrors:
+    - svc-1.wcooke.me:5001
+    - svc-2.wcooke.me:5001
+    source: docker.io
+  - mirrors:
+    - svc-1.wcooke.me:5002
+    - svc-2.wcooke.me:5002
+    source: quay.io
+  - mirrors:
+    - svc-1.wcooke.me:5003
+    - svc-2.wcooke.me:5003
+    source: docker.elastic.co
+  - mirrors:
+    - svc-1.wcooke.me:5004
+    - svc-2.wcooke.me:5004
+    source: registry.k8s.io

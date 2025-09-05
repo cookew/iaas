@@ -1,0 +1,12 @@
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: gw
+spec:
+  disableMP: false
+  dualStackAddressFamily: false
+  ebgpMultiHop: true
+  myASN: 65533
+  peerASN: 65534
+  peerAddress: 10.42.41.1
+  peerPort: 179

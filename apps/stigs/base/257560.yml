@@ -1,0 +1,35 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-audit-rules-suid-privilege-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - contents:
+          source: data:,-a%20always%2Cexit%20-F%20arch=b32%20-S%20execve%20-C%20uid%21=euid%20-F%20euid=0%20-k%20execpriv%0A-a%20always%2Cexit%20-F%20arch=b64%20-S%20execve%20-C%20uid%21=euid%20-F%20euid=0%20-k%20execpriv%0A-a%20always%2Cexit%20-F%20arch=b32%20-S%20execve%20-C%20gid%21=egid%20-F%20egid=0%20-k%20execpriv%0A-a%20always%2Cexit%20-F%20arch=b64%20-S%20execve%20-C%20gid%21=egid%20-F%20egid=0%20-k%20execpriv%0A
+        mode: 0644
+        path: /etc/audit/rules.d/75-audit-suid-privilege-function.rules
+        overwrite: true
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-audit-rules-suid-privilege-worker
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - contents:
+          source: data:,-a%20always%2Cexit%20-F%20arch=b32%20-S%20execve%20-C%20uid%21=euid%20-F%20euid=0%20-k%20execpriv%0A-a%20always%2Cexit%20-F%20arch=b64%20-S%20execve%20-C%20uid%21=euid%20-F%20euid=0%20-k%20execpriv%0A-a%20always%2Cexit%20-F%20arch=b32%20-S%20execve%20-C%20gid%21=egid%20-F%20egid=0%20-k%20execpriv%0A-a%20always%2Cexit%20-F%20arch=b64%20-S%20execve%20-C%20gid%21=egid%20-F%20egid=0%20-k%20execpriv%0A
+        mode: 0644
+        path: /etc/audit/rules.d/75-audit-suid-privilege-function.rules
+        overwrite: true

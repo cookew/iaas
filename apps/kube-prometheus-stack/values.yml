@@ -1,0 +1,154 @@
+alertmanager:
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: iaas-wcooke-me
+      forecastle.stakater.com/appName: Alertmanager
+      forecastle.stakater.com/expose: "true"
+      forecastle.stakater.com/group: Observability
+      forecastle.stakater.com/icon: https://alertmanager.apps.iaas.wcooke.me/favicon.ico
+      forecastle.stakater.com/network-restricted: "true"
+    enabled: true
+    hosts:
+    - alertmanager.apps.iaas.wcooke.me
+    ingressClassName: openshift-default
+    tls:
+    - secretName: alertmanager-ingress-tls
+      hosts:
+      - alertmanager.apps.iaas.wcooke.me
+  alertmanagerSpec:
+    replicas: 1
+    storage:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteMany"]
+          resources:
+            requests:
+              storage: 5Gi
+          storageClassName: ceph-filesystem
+
+cleanPrometheusOperatorObjectNames: true
+
+crds:
+  enabled: false
+
+grafana:
+  enabled: false
+  forceDeployDashboards: true
+  forceDeployDatasources: true
+
+kubeProxy:
+  enabled: false
+
+prometheus:
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: iaas-wcooke-me
+      forecastle.stakater.com/appName: Prometheus
+      forecastle.stakater.com/expose: "true"
+      forecastle.stakater.com/group: Observability
+      forecastle.stakater.com/icon: https://prometheus.apps.iaas.wcooke.me/favicon.svg
+      forecastle.stakater.com/network-restricted: "true"
+    enabled: true
+    hosts:
+    - prometheus.apps.iaas.wcooke.me
+    ingressClassName: openshift-default
+    tls:
+    - secretName: prometheus-ingress-tls
+      hosts:
+      - prometheus.apps.iaas.wcooke.me
+  prometheusSpec:
+    enableAdminAPI: true
+    externalUrl: https://prometheus.apps.iaas.wcooke.me
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Delete
+      whenScaled: Retain
+    replicas: 2
+    # retention: 360d
+    retentionSize: 40GiB
+    shards: 1
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 4Gi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+    podMonitorSelector:
+      matchExpressions:
+      - key: prometheus
+        operator: NotIn
+        values:
+        - openshift-monitoring
+    ruleSelector:
+      matchExpressions:
+      - key: prometheus
+        operator: NotIn
+        values:
+        - openshift-monitoring
+    scrapeConfigNamespaceSelector:
+      matchExpressions:
+      - key: name
+        operator: NotIn
+        values:
+        - openshift-monitoring
+    scrapeConfigSelector:
+      matchExpressions:
+      - key: xyz
+        operator: NotIn
+        values:
+        - def
+    serviceMonitorNamespaceSelector:
+      matchExpressions:
+      - key: name
+        operator: NotIn
+        values:
+        - openshift-monitoring
+    serviceMonitorSelector:
+      matchExpressions:
+      - key: prometheus
+        operator: NotIn
+        values:
+        - openshift-monitoring
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteMany"]
+          storageClassName: ceph-filesystem
+          resources:
+            requests:
+              storage: 50Gi
+
+prometheus-node-exporter:
+  hostNetwork: false
+  prometheus:
+    monitor:
+      enabled: true
+
+prometheusOperator:
+  admissionWebhooks:
+    deployment:
+      enabled: true
+      replicas: 2
+    certManager:
+      admissionCert:
+        duration: 2160h
+      enabled: true
+      issuerRef:
+        name: iaas-wcooke-me
+        kind: ClusterIssuer
+  denyNamespaces:
+  - openshift-operators
+  - openshift-monitoring
+  # You will need to add these lines to kube-prometheus-stack to resolve some stupid alertmanager errors in prometheus.
+  # Basically, in a nutshell, the prometheus stack creates a service that is the same as the one created by the openshift prometheus operator.
+  # These 2 services clobber each other and will fire off a bunch of recurring errors and alert manager alerts.
+  # It also doubles the metrics for the kubelet. It'll show you have 6 kublets for example.
+  kubeletService:
+    enabled: false
+
+nodeExporter:
+  operatingSystems:
+    aix:
+      enabled: false
+    darwin:
+      enabled: false

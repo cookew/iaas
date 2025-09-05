@@ -1,0 +1,42 @@
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: argocd
+allowHostDirVolumePlugin: true
+allowHostIPC: true
+allowHostNetwork: true
+allowHostPID: true
+allowHostPorts: true
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: true
+allowedCapabilities:
+- '*'
+allowedUnsafeSysctls:
+- '*'
+defaultAddCapabilities: null
+fsGroup:
+  type: RunAsAny
+readOnlyRootFilesystem: false
+requiredDropCapabilities: null
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+seccompProfiles:
+- '*'
+supplementalGroups:
+  type: RunAsAny
+users:
+- system:serviceaccount:argocd:argocd-application-controller
+- system:serviceaccount:argocd:argocd-applicationset-controller
+- system:serviceaccount:argocd:argocd-dex-server
+- system:serviceaccount:argocd:argocd-notifications-controller
+- system:serviceaccount:argocd:argocd-redis
+- system:serviceaccount:argocd:argocd-redis-ha
+- system:serviceaccount:argocd:argocd-redis-ha-haproxy
+- system:serviceaccount:argocd:argocd-repo-server
+- system:serviceaccount:argocd:argocd-server
+- system:serviceaccount:argocd:builder
+- system:serviceaccount:argocd:deployer
+volumes:
+- '*'

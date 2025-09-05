@@ -1,0 +1,16 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: gitlab-registry-connection
+  namespace: gitlab-system
+spec:
+  encryptedData:
+    connection: AgAkhrW7rooM9qrgcUVoUyfO9BH6EkXCjwGGCRvqi+IsUnMEu2ENOSXOBvOq0XJgEvv+FaNj+7TBm0xON/miJfmnmo9PcNxYXfoDuhgPLrqbRyponwPe7qv1reyRM51YmjNo97x2ng1HJG6+ON4KEv7mvcUIvqByNAMtOWQXCYjM3TcLayRmLQMt5EJxesL1fvwuZsu3eWl6QVgF2gaM1JjLutWsbhZ26exdbP7W6fdm4DZKPhgimxfV9KTAohk50twTVRu4saTNJis0vLIstTQvn+RQLSjFpQrJ1+UhHi6KffTJrNSrpC14IrFYdPvgUp/rQV3u34d2EtPL7WFONxSBihkjest1tdC4RzCZk/mcU9hdG77zYYLwnkXM4htYjwuwtwHtwbPCXea51kj7DHXqfPAPlHeBuDgeCxefxiyEB5GG2J6N21RCnBMWHTie+k6a7wX2s9KGCCMkprMXyE4RNq69Hf5QrNGpYuPSgw9Fmzl2nWq6biQ90f1Kpi42R10c8dPoY5YkyOsSGtzuur8U1LtRXHwsce4OxX2I/+axmahLWjfxwq7HHY+hQJj+SaGisKoH61wmOf/pe4iC3tlJz6UvpXj90ikLLVXSPc+w+P+/BEMXXLoxl+E0C3WlnpJrc4cFpQTa0sc0kkT3nyuycqdkemsQCpbiADAKSYi1/hQ9mjNhqk6yUwZgIx4BFQcN/9LkrV38ZNqEJEBhiFisf2x7WmgQkKCWBUy6mJrFH43WH1KPYwOjIiJPBgVDzi88TX+NHKu0s5MoLoLWZw0PmL/H/GsGIw6EOFnXJJT0a3vRGd/mv5SHk3pBH4ey2I3mxYlmLc+73pvE0nzjPI/OpGTRgFnI0B5aMy5IHM4jrT37ml55V+4p6A4MOOktBgv8qXBs7B+VJddzbg3oRpEZbgoeewI64r524DwszizIBc0N/u0GKqJdKsXgsMJfkkKeQIcgkXG2WLNIucN/o6PDyCrr5UnmuVOGC9N89sALK6hSszk5gP6g3YDKFPOqpTUka7qEmfy0/1UF0vQAB3yk3QNQmaYt8ASH9XVjtIGq
+  template:
+    metadata:
+      creationTimestamp: null
+      name: gitlab-registry-connection
+      namespace: gitlab-system
+    type: Opaque

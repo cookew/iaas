@@ -1,0 +1,10 @@
+# allowHostNetwork: true
+# allowHostPorts: true
+- op: replace
+  path: /allowHostNetwork
+  value:
+    true
+- op: replace
+  path: /allowHostPorts
+  value:
+    true

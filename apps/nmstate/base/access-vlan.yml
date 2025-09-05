@@ -1,0 +1,53 @@
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: access-vlan16
+spec:
+  nodeSelector:
+    # node-role.kubernetes.io/worker: ''
+    host-model-cpu.node.kubevirt.io/SapphireRapids: "true"
+  desiredState:
+    interfaces:
+    - name: vlan16
+      ipv4:
+        enabled: false
+      ipv6:
+        enabled: false
+      vlan:
+        base-iface: eno3np0
+        id: 16
+      state: up
+      type: vlan
+    - name: br16
+      bridge:
+        options:
+          stp:
+            enabled: false
+        port:
+          - name: vlan16
+      description: Access vlan16 bridge
+      ipv4:
+        enabled: false
+      ipv6:
+        enabled: false
+      state: up
+      type: linux-bridge
+---
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  annotations:
+    k8s.v1.cni.cncf.io/resourceName: bridge.network.kubevirt.io/br16
+  name: access-16
+  namespace: default
+spec:
+  config: |-
+    {
+        "cniVersion": "0.3.1",
+        "name": "access-16",
+        "type": "bridge",
+        "bridge": "br16",
+        "ipam": {},
+        "macspoofchk": true,
+        "preserveDefaultVlan": false
+    }

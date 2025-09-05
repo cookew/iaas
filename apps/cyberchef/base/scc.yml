@@ -1,0 +1,26 @@
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: cyberchef
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegeEscalation: false
+allowedCapabilities: []
+defaultAddCapabilities: []
+fsGroup:
+  ranges:
+  - max: 101
+    min: 101
+  type: MustRunAs
+priority: 100
+readOnlyRootFilesystem: false
+requiredDropCapabilities: []
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+users:
+- system:serviceaccount:cyberchef:default

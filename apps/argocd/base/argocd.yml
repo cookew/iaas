@@ -1,0 +1,126 @@
+apiVersion: argoproj.io/v1beta1
+kind: ArgoCD
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  applicationSet:
+    enabled: true
+    sourceNamespaces:
+      - argocd
+    webhookServer:
+      host: argocd.apps.iaas.wcooke.me
+      ingress:
+        annotations:
+          cert-manager.io/cluster-issuer: iaas-wcooke-me
+          nginx.ingress.kubernetes.io/backend-protocol: "https"
+        enabled: true
+        ingressClassName: openshift-default
+        tls:
+          - hosts:
+              - argocd.apps.iaas.wcooke.me
+            secretName: argocd-webhook-ingress
+      route:
+        enabled: false
+  controller:
+    enabled: true
+    processors: {}
+    resources:
+      limits:
+        cpu: 2
+        memory: 2Gi
+      requests:
+        cpu: 250m
+        memory: 1Gi
+    sharding: {}
+  ha:
+    enabled: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  initialSSHKnownHosts:
+    keys: svc-1.wcooke.me ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOlAsmkC/VbI5kvQwXC9N81dLIiIZDI4RtS02iissBmW svc-1.wcooke.me
+  kustomizeBuildOptions: "--enable-helm"
+  monitoring:
+    disableMetrics: false
+    enabled: true
+  notifications:
+    enabled: true
+    replicas: 2
+  prometheus:
+    enabled: false
+  rbac:
+    defaultPolicy: "role:admin"
+  redis:
+    autotls: openshift
+    # disableTLSVerification: true
+    enabled: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  repo:
+    autotls: openshift
+    enabled: true
+    replicas: 2
+    resources:
+      limits:
+        cpu: 1
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  server:
+    autoscale:
+      enabled: false
+    enableRolloutsUI: true
+    enabled: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 125m
+        memory: 128Mi
+    grpc:
+      ingress:
+        enabled: false
+    host: argocd.apps.iaas.wcooke.me
+    ingress:
+      annotations:
+        cert-manager.io/cluster-issuer: iaas-wcooke-me
+        nginx.ingress.kubernetes.io/backend-protocol: "https"
+      enabled: true
+      ingressClassName: openshift-default
+      path: /
+      tls:
+        - hosts:
+            - argocd.apps.iaas.wcooke.me
+          secretName: argocd-ingress-certs
+    # insecure: true
+    replicas: 2
+    route:
+      enabled: true
+    service:
+      type: ClusterIP
+  sourceNamespaces:
+    - "argocd"
+  sso:
+    dex:
+      openShiftOAuth: true
+      resources:
+        limits:
+          cpu: 500m
+          memory: 256Mi
+        requests:
+          cpu: 250m
+          memory: 128Mi
+    provider: dex
+  statusBadgeEnabled: true

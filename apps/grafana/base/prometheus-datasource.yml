@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-datasource
+  labels:
+    grafana_datasource: "1"
+data:
+  prometheus-datasource.yaml: |-
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      access: proxy
+      isDefault: true
+      jsonData:
+        httpMethod: POST
+        timeInterval: 30s
+      type: prometheus
+      uid: grafana
+      url: http://prometheus.prometheus.svc:9090

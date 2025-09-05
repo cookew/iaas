@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- base/257509,257510.yml
+- base/257512.yml
+- base/257516.yml
+- base/257518.yml
+- base/257519.yml
+- base/257521,257522.yml
+- base/257533.yml
+- base/257534.yml
+# - base/257540.yml
+- base/257548.yml
+- base/257549.yml
+- base/257550.yml
+- base/257552.yml
+- base/257560.yml
+- base/257575.yml
+- base/257576.yml
+- base/257577.yml
+- base/257578.yml
+- base/257579.yml
+- base/257580.yml
+- base/257581.yml
+- base/257582.yml
+- base/257583.yml
+- base/257584.yml
+# - base/257585.yml
+
+# NTP servers need to be set in this file
+- base/257526.yml

@@ -1,0 +1,70 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  name: keycloak
+spec:
+  db:
+    database: keycloak
+    host: keycloak-pg-cluster-rw
+    passwordSecret:
+      key: password
+      name: keycloak-pg-cluster-app
+    usernameSecret:
+      key: username
+      name: keycloak-pg-cluster-app
+    vendor: postgres
+  features:
+    enabled:
+    - docker
+    # - fips
+    - ipa-tuura-federation
+    - passkeys
+  hostname:
+    # admin: https://keycloak.apps.iaas.wcooke.me/admin
+    hostname: https://keycloak.apps.iaas.wcooke.me
+  http:
+    httpEnabled: false
+    tlsSecret: keycloak-certificate
+  ingress:
+    annotations:
+      forecastle.stakater.com/appName: Keycloak
+      forecastle.stakater.com/expose: "true"
+      forecastle.stakater.com/group: Kubernetes
+      forecastle.stakater.com/icon: https://keycloak.apps.iaas.wcooke.me/resources/w2ekr/admin/keycloak.v2/logo.svg
+      forecastle.stakater.com/network-restricted: "true"
+    className: openshift-default
+  instances: 2
+  # networkPolicy:
+  #   enabled: true
+  #   https:
+  #   - namespaceSelector:
+  #       matchLabels:
+  #         kubernetes.io/metadata.name: ingress-nginx
+  #   management:
+  #   - namespaceSelector:
+  #       matchLabels:
+  #         kubernetes.io/metadata.name: prometheus
+  proxy:
+    headers: xforwarded # double check your reverse proxy sets and overwrites the X-Forwarded-* headers
+  resources:
+    requests:
+      cpu: 256m
+      memory: 128Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+  # scheduling:
+  #   affinity:
+  #     nodeAffinity:
+  #       requiredDuringSchedulingIgnoredDuringExecution:
+  #         nodeSelectorTerms:
+  #         - matchExpressions:
+  #           - key: node-role.kubernetes.io/control-plane
+  #             operator: Exists
+  #   tolerations:
+  #     - effect: NoSchedule
+  #       key: node-role.kubernetes.io/control-plane
+  #       operator: Exists
+  # startOptimized: true
+
+# https://www.keycloak.org/operator/advanced-configuration

@@ -1,0 +1,36 @@
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: metallb
+allowHostDirVolumePlugin: true
+allowHostIPC: true
+allowHostNetwork: true
+allowHostPID: true
+allowHostPorts: true
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: true
+allowedCapabilities:
+- '*'
+allowedUnsafeSysctls:
+- '*'
+defaultAddCapabilities: []
+fsGroup:
+  type: RunAsAny
+groups:
+- system:cluster-admins
+- system:nodes
+- system:masters
+readOnlyRootFilesystem: false
+requiredDropCapabilities: []
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+seccompProfiles:
+- '*'
+supplementalGroups:
+  type: RunAsAny
+users:
+- system:serviceaccount:metallb-system:metallb-controller
+- system:serviceaccount:metallb-system:metallb-speaker
+# userNamespaceLevel: AllowHostLevel

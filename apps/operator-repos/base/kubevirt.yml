@@ -1,0 +1,9 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: hco-unstable-catalog-source
+spec:
+  sourceType: grpc
+  image: quay.io/kubevirt/hyperconverged-cluster-index:1.16.0-unstable
+  displayName: Kubevirt
+  publisher: Kubevirt Project

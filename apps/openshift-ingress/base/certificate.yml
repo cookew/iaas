@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ingress-certificate
+  namespace: openshift-ingress
+spec:
+  commonName: ingress-certificate
+  dnsNames:
+    - '*.apps.iaas.wcooke.me'
+  duration: 2160h
+  isCA: false
+  issuerRef:
+    kind: ClusterIssuer
+    name: iaas-wcooke-me
+  secretName: ingress-certificate
+  usages:
+  - client auth
+  - server auth

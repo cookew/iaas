@@ -1,0 +1,14 @@
+apiVersion: ingress.operator.openshift.io/v1
+kind: DNSRecord
+metadata:
+  labels:
+    ingresscontroller.operator.openshift.io/owning-ingresscontroller: default
+  name: s3-ceph-buckets
+  namespace: openshift-ingress-operator
+spec:
+  dnsManagementPolicy: Unmanaged
+  dnsName: '*.rook-ceph-rgw-ceph-objectstore.rook-ceph-cluster.svc.'
+  recordTTL: 30
+  recordType: CNAME
+  targets:
+  - rook-ceph-rgw-ceph-objectstore.rook-ceph-cluster.svc

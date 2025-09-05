@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: kubevirt-operatorgroup
+spec:
+  upgradeStrategy: Default
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: hco-kubevirt
+spec:
+    channel: candidate-v1.16
+    name: community-kubevirt-hyperconverged
+    source: hco-unstable-catalog-source
+    sourceNamespace: openshift-marketplace

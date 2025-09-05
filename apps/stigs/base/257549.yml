@@ -1,0 +1,25 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 05-kernelarg-vsyscall-none-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+  kernelArguments:
+  - vsyscall=none
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 05-kernelarg-vsyscall-none-worker
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+  kernelArguments:
+  - vsyscall=none

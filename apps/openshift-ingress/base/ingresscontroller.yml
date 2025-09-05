@@ -1,0 +1,45 @@
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+  name: default
+  namespace: openshift-ingress-operator
+spec:
+  clientTLS:
+    clientCA:
+      name: ""
+    clientCertificatePolicy: ""
+  defaultCertificate:
+    name: ingress-certificate
+  httpCompression: {}
+  httpEmptyRequestsPolicy: Respond
+  httpErrorCodePages:
+    name: ""
+  idleConnectionTerminationPolicy: Immediate
+  logging:
+    access:
+      destination:
+        container:
+          maxLength: 4096
+        type: Container
+      httpCaptureHeaders:
+        request:
+        - maxLength: 200
+          name: Host
+      httpLogFormat: bytes_read=%B captured_request_cookie=%CC captured_response_cookie=%CS
+        hostname=%H http_method=%HM http_request_uri=%HU http_version=%HV unique-id=%ID
+        status_code=%ST active_time_of_the_request=%Ta connection_handshake_time=%Th
+        idle_time_before_the_http_request=%Ti time_to_receive_the_full_request_from_1st_byte=%TR
+        bytes_uploaded=%U actconn=%ac backend_name=%b backend_concurrent_connections=%bc
+        backend_source_ip=%bi backend_source_port=%bp backend_queue=%bq client_ip=%ci
+        client_port=%cp frontend_name=%f frontend_concurrent_connections=%fc frontend_ip=%fi
+        frontend_port=%fp frontend_name_transport=%ft frontend_log_counter=%lc captured_request_headers_default_style=%hr
+        captured_response_headers_clf_style=%hsl accept_date_milliseconds=%ms pid=%pid
+        http_request=%r retries=%rc request_counter=%rt server_name=%s srv_conn=%sc
+        srv_queue=%sq ssl_ciphers=%sslc ssl_version=%sslv date_time=%t termination_state_with_cookie_status=%tsc
+      logEmptyRequests: Log
+  replicas: 2
+  routeAdmission:
+    # https://access.redhat.com/solutions/5220631
+    wildcardPolicy: WildcardsAllowed
+  tuningOptions:
+    reloadInterval: 0s

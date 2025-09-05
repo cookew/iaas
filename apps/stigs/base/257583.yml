@@ -1,0 +1,31 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 80-sshd-service-disable-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    systemd:
+      units:
+      - name: sshd.service
+        # enabled: false
+        enabled: true
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 80-sshd-service-disable-worker
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    systemd:
+      units:
+      - name: sshd.service
+        # enabled: false
+        enabled: true

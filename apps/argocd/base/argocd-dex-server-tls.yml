@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-dex-server-tls
+spec:
+  commonName: argocd-dex-server
+  isCA: false
+  issuerRef:
+    name: iaas-wcooke-me
+    kind: ClusterIssuer
+  secretName: argocd-dex-server-tls
+  usages:
+    - server auth
+    - client auth
+  duration: 2160h

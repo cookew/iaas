@@ -1,0 +1,27 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 05-kernelarg-audit-enabled-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+  kernelArguments:
+  - audit=1
+  - audit_backlog_limit=8192
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 05-kernelarg-audit-enabled-worker
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+  kernelArguments:
+  - audit=1
+  - audit_backlog_limit=8192

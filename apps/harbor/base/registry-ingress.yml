@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: iaas-wcooke-me
+    ingress.kubernetes.io/proxy-body-size: "0"
+    ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  name: harbor-registry-ingress
+spec:
+  ingressClassName: openshift-default
+  rules:
+  - host: registry.apps.iaas.wcooke.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: harbor-core
+            port:
+              number: 80
+        path: /v2/
+        pathType: Prefix
+  tls:
+  - hosts:
+    - registry.apps.iaas.wcooke.me
+    secretName: harbor-registry-ingress

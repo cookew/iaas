@@ -1,0 +1,105 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-logon-attempts-rules-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - contents:
+          source: data:,-w%20/var/run/faillock%20-p%20wa%20-k%20logins%0A
+        mode: 0644
+        path: /etc/audit/rules.d/75-faillock_login_events.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/var/log/lastlog%20-p%20wa%20-k%20logins%0A
+        mode: 0644
+        path: /etc/audit/rules.d/75-lastlog_login_events.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/etc/sudoers.d/%20-p%20wa%20-k%20actions%0A-w%20/etc/sudoers%20-p%20wa%20-k%20actions%0A
+        mode: 0644
+        path: /etc/audit/rules.d/75-audit-sysadmin-actions.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/etc/group%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A
+        mode: 0644
+        path: /etc/audit/rules.d/30-etc_group_usergroup_modification.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/etc/gshadow%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A
+        mode: 0644
+        path: /etc/audit/rules.d/30-etc_gshadow_usergroup_modification.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/etc/security/opasswd%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A
+        mode: 0644
+        path: /etc/audit/rules.d/30-etc_security_opasswd_usergroup_modification.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/etc/passwd%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A
+        mode: 0644
+        path: /etc/audit/rules.d/30-etc_passwd_usergroup_modification.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/etc/shadow%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A
+        mode: 0644
+        path: /etc/audit/rules.d/30-etc_shadow_usergroup_modification.rules
+        overwrite: true
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-logon-attempts-rules-worker
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - contents:
+          source: data:,-w%20/var/run/faillock%20-p%20wa%20-k%20logins%0A
+        mode: 0644
+        path: /etc/audit/rules.d/75-faillock_login_events.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/var/log/lastlog%20-p%20wa%20-k%20logins%0A
+        mode: 0644
+        path: /etc/audit/rules.d/75-lastlog_login_events.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/etc/sudoers.d/%20-p%20wa%20-k%20actions%0A-w%20/etc/sudoers%20-p%20wa%20-k%20actions%0A
+        mode: 0644
+        path: /etc/audit/rules.d/75-audit-sysadmin-actions.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/etc/group%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A
+        mode: 0644
+        path: /etc/audit/rules.d/30-etc_group_usergroup_modification.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/etc/gshadow%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A
+        mode: 0644
+        path: /etc/audit/rules.d/30-etc_gshadow_usergroup_modification.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/etc/security/opasswd%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A
+        mode: 0644
+        path: /etc/audit/rules.d/30-etc_security_opasswd_usergroup_modification.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/etc/passwd%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A
+        mode: 0644
+        path: /etc/audit/rules.d/30-etc_passwd_usergroup_modification.rules
+        overwrite: true
+      - contents:
+          source: data:,-w%20/etc/shadow%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A
+        mode: 0644
+        path: /etc/audit/rules.d/30-etc_shadow_usergroup_modification.rules
+        overwrite: true

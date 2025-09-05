@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: gitlab-system
+
+resources:
+- base/bucket-git-lfs.yml
+- base/bucket-gitlab-artifacts.yml
+- base/bucket-gitlab-ci-secure-files.yml
+- base/bucket-gitlab-dependency-proxy.yml
+- base/bucket-gitlab-mr-diffs.yml
+- base/bucket-gitlab-packages.yml
+- base/bucket-gitlab-pages.yml
+- base/bucket-gitlab-registry.yml
+- base/bucket-gitlab-terraform-state.yml
+- base/bucket-gitlab-uploads.yml
+- base/bucket-user.yml
+- base/certificate.yml
+- base/gitlab.yml
+- base/ingress-role-binding.yml
+- base/ingress-role.yml
+- base/scc.yml
+- sealedsecrets/bucket-user-creds.yml
+- sealedsecrets/gitlab-connection.yml
+- sealedsecrets/gitlab-oidc.yml
+- sealedsecrets/gitlab-registry-connection.yml

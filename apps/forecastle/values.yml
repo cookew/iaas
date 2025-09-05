@@ -1,0 +1,41 @@
+forecastle:
+  namespace: forecastle
+  deployment:
+    replicas: 2
+    resources:
+      limits:
+        cpu: 250m
+        memory: 64Mi
+      requests:
+        cpu: 100m
+        memory: 32Mi
+    revisionHistoryLimit: 0
+  config:
+    namespaceSelector:
+      any: true
+    headerBackground: maroon
+    # headerForeground:
+    title: Apps
+    customApps:
+    # - name: Name of the custom app
+    #   icon: URL of the icon for the custom app
+    #   url: URL of the custom app
+    #   group: Group for the custom app
+    #   properties: Additional Properties of the app as a map
+    #   networkRestricted: Whether app is network restricted or not
+    - name: Okd
+      group: Kubernetes
+      icon: https://console-openshift-console.apps.iaas.wcooke.me/static/assets/public/imgs/okd-favicon.png
+      networkRestricted: true
+      url: https://console-openshift-console.apps.iaas.wcooke.me/
+  route:
+    enabled: true
+    annotations: {}
+    additionalLabels: {}
+    host: forecastle.apps.iaas.wcooke.me
+    port:
+      targetPort: http
+    wildcardPolicy: None
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect

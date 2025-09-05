@@ -1,0 +1,35 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 90-immutable-rules-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - contents:
+          source: data:,-e%202%0A
+        mode: 0600
+        path: /etc/audit/rules.d/90-immutable.rules
+        overwrite: true
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 90-immutable-rules-worker
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - contents:
+          source: data:,-e%202%0A
+        mode: 0600
+        path: /etc/audit/rules.d/90-immutable.rules
+        overwrite: true

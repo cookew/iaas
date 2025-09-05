@@ -1,0 +1,37 @@
+csi:
+  # csiAddons:
+  #   enabled: false
+  # enableCSIEncryption: true
+  enableLiveness: true
+  enableMetadata: true
+  enableOMAPGenerator: true
+  # logLevel: 1
+  nfs:
+    enabled: true
+  # pluginTolerations:
+  #   - effect: NoSchedule
+  #     key: node-role.kubernetes.io/control-plane
+  #     operator: Exists
+  # provisionerTolerations:
+  #   - effect: NoSchedule
+  #     key: node-role.kubernetes.io/control-plane
+  #     operator: Exists
+  serviceMonitor:
+    enabled: true
+    namespace: rook-ceph
+  # sidecarLogLevel: 1
+
+hostpathRequiresPrivileged: true
+
+monitoring:
+  enabled: true
+
+# nodeSelector:
+#   node-role.kubernetes.io/control-plane: ""
+
+obcAllowAdditionalConfigFields: "maxObjects,maxSize,bucketMaxObjects,bucketMaxSize,bucketPolicy,bucketLifecycle,bucketOwner"
+
+# tolerations:
+#   - effect: NoSchedule
+#     key: node-role.kubernetes.io/control-plane
+#     operator: Exists

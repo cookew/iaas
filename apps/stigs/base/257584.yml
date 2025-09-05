@@ -1,0 +1,35 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 80-kernmod-usb-storage-disable-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - contents:
+          source: data:,install%20usb-storage%20/bin/true%0A
+        mode: 0644
+        path: /etc/modprobe.d/75-kernel_module_usb-storage_disabled.conf
+        overwrite: true
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 80-kernmod-usb-storage-disable-worker
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - contents:
+          source: data:,install%20usb-storage%20/bin/true%0A
+        mode: 0644
+        path: /etc/modprobe.d/75-kernel_module_usb-storage_disabled.conf
+        overwrite: true

@@ -1,0 +1,133 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  name: core-apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions:
+  - missingkey=error
+  generators:
+  - list:
+      elements:
+      - name: openshift-config
+        createNamespace: "false"
+        syncWave: -100
+      # - createNamespace: "false"
+      #   name: prometheus-operator-crds
+      #   namespace: kube-prometheus-stack
+      #   syncWave: -100
+
+      - name: cert-manager
+        createNamespace: "false"
+        syncWave: -90
+      - name: sealed-secrets
+        createNamespace: "false"
+        namespace: kube-system
+        syncWave: -90
+
+      - name: cert-manager-certs
+        createNamespace: "false"
+        namespace: cert-manager
+        syncWave: -80
+      - name: trust-manager
+        namespace: cert-manager
+        createNamespace: "false"
+        syncWave: -80
+
+      - name: argocd
+        syncWave: -70
+      - name: openshift-ingress
+        createNamespace: "false"
+        namespace: openshift-ingress-operator
+        syncWave: -70
+
+      - name: metallb
+        namespace: metallb-system
+        syncWave: -60
+      - name: operator-repos
+        createNamespace: "false"
+        namespace: openshift-marketplace
+        syncWave: -60
+      - name: rook-ceph
+        syncWave: -60
+
+      - name: kubevirt-operator
+        namespace: kubevirt-hyperconverged
+        syncWave: -50
+      - name: nmstate
+        createNamespace: "true"
+        syncWave: -50
+      - name: rook-ceph-cluster
+        createNamespace: "true"
+        syncWave: -50
+
+      - name: cloudnative-pg
+        serverSideApply: "true"
+        syncWave: -40
+      - name: kubevirt-hyperconverged
+        createNamespace: "false"
+        serverSideApply: "true"
+        syncWave: -40
+
+      - name: keycloak
+        syncWave: -30
+      - name: kube-prometheus-stack
+        syncWave: -30
+
+      - name: stigs
+        createNamespace: "false"
+        syncWave: -20
+
+      # - name: argo-workflows
+      #   serverSideApply: "true"
+      - name: cyberchef
+      - name: drawio
+      - name: fluent-bit
+      - name: forecastle
+      # - name: gitea
+      - name: gitlab
+        namespace: gitlab-system
+      - name: gitlab-operator
+        namespace: gitlab-system
+      - name: gitlab-runners
+      - name: grafana
+      - name: harbor
+      # - name: keda
+      #   replace: "true"
+      - name: kubevirt-templates
+      - name: loki
+      # - name: nextcloud
+      # - name: openbao
+      # - name: terrakube
+
+  template:
+    metadata:
+      finalizers:
+      - resources-finalizer.argocd.argoproj.io
+      name: '{{ .name }}'
+      namespace: argocd
+      annotations:
+        # acargocd.argoproj.io/hook: '{{ dig "hook" "" . }}'
+        argocd.argoproj.io/sync-wave: '{{ dig "syncWave" 0 . }}'
+    spec:
+      destination:
+        name: in-cluster
+        namespace: '{{ dig "namespace" .name . }}'
+      project: core
+      revisionHistoryLimit: 0
+      source:
+        path: apps/{{ dig "path" .name . }}
+        repoURL: argocd@svc-1.wcooke.me:iaas
+        targetRevision: main
+      syncPolicy:
+        automated:
+          allowEmpty: true
+          prune: true
+          selfHeal: true #{{ dig "selfHeal" "true" . }}
+        syncOptions:
+        - CreateNamespace={{ dig "createNamespace" "true" . }}
+        - Replace={{ dig "replace" "false" . }}
+        - ServerSideApply={{ dig "serverSideApply" "false" . }}

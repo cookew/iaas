@@ -1,0 +1,26 @@
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: drawio
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegeEscalation: false
+allowedCapabilities: []
+defaultAddCapabilities: []
+fsGroup:
+  ranges:
+  - max: 999
+    min: 999
+  type: MustRunAs
+priority: 100
+readOnlyRootFilesystem: false
+requiredDropCapabilities: []
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+users:
+- system:serviceaccount:drawio:default

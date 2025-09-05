@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- base/project.yml
+
+patches:
+- path: patches/mounts.yml
+  target:
+    kind: Deployment
+    name: rook-ceph-operator
+
+helmCharts:
+- name: rook-ceph
+  includeCRDs: true
+  namespace: rook-ceph
+  releaseName: rook-ceph
+  repo: https://charts.rook.io/release
+  valuesFile: values.yml
+  version: v1.17.8

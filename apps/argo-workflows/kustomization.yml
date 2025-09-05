@@ -1,0 +1,38 @@
+kind: Kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+
+namespace: argo-workflows
+
+resources:
+- https://github.com/argoproj/argo-workflows/manifests/base/crds/full?ref=v3.7.1
+- https://github.com/argoproj/argo-workflows/manifests/cluster-install-no-crds?ref=v3.7.1
+- base/ingress.yml
+- base/metrics.yml
+- base/objectbucketclaim.yml
+- sealedsecrets/argo-workflows-keycloak-client.yml
+
+patches:
+- path: patches/argo-server-deployment.yml
+  target:
+    kind: Deployment
+    name: argo-server
+    version: v1
+- path: patches/argo-server-service.yml
+  target:
+    kind: Service
+    name: argo-server
+    version: v1
+- path: patches/workflow-controller-configmap.yml
+- path: patches/workflow-controller-deployment.yml
+  target:
+    kind: Deployment
+    name: workflow-controller
+    version: v1
+
+helmCharts:
+- name: cluster
+  namespace: argo-workflows
+  releaseName: argo-workflows-pg
+  repo: https://cloudnative-pg.github.io/charts
+  version: 0.3.7
+  valuesFile: argo-workflows-pg-values.yml
