@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: github-arc-runners
+
+resources:
+- base/github-arc-dind-rolebinding.yml
+- base/github-arc-rolebinding.yml
+- sealed-secrets/github-arc-cyberchef-container.yml
+
+helmCharts:
+- includeCRDs: true
+  name: gha-runner-scale-set
+  namespace: github-arc-runners
+  releaseName: cyberchef-container
+  repo: oci://ghcr.io/actions/actions-runner-controller-charts
+  valuesFile: cyberchef-container-values.yml
+  version: 0.12.1

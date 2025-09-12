@@ -20,4 +20,4 @@ helmCharts:
   releaseName: grafana
   repo: https://grafana.github.io/helm-charts
   valuesFile: values.yml
-  version: 9.4.4
+  version: 9.4.5

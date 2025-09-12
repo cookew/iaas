@@ -23,7 +23,7 @@ spec:
     spec:
       automountServiceAccountToken: false
       containers:
-      - image: jgraph/drawio:28.0.7
+      - image: jgraph/drawio:28.2.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -70,5 +70,5 @@ spec:
           sizeLimit: 5Mi
         name: html
       - emptyDir:
-          sizeLimit: 5Mi
+          sizeLimit: 16Mi
         name: logs

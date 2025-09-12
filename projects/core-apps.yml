@@ -103,6 +103,10 @@ spec:
       # - name: openbao
       # - name: terrakube
 
+      - name: github-arc
+        serverSideApply: "true"
+      - name: github-arc-runners
+
   template:
     metadata:
       finalizers:

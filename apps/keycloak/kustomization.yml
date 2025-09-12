@@ -7,6 +7,6 @@ resources:
 - base/keycloak.yml
 - base/keycloak-certificate.yml
 - base/keycloak-pg-cluster.yml
-- https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/26.3.3/kubernetes/keycloaks.k8s.keycloak.org-v1.yml
-- https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/26.3.3/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml
-- https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/26.3.3/kubernetes/kubernetes.yml
+- https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/26.3.4/kubernetes/keycloaks.k8s.keycloak.org-v1.yml
+- https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/26.3.4/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml
+- https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/26.3.4/kubernetes/kubernetes.yml
