@@ -171,6 +171,8 @@ template:
       - dockerd
       - --host=unix:///var/run/docker.sock
       - --group=$(DOCKER_GROUP_GID)
+      # This is need to allow network stuff (curl and things) to work within docker in docker
+      - --mtu=1400
       env:
       - name: DOCKER_GROUP_GID
         value: "123"
